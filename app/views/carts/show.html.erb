@@ -4,28 +4,31 @@
     <h1>My Cart</h1>
   </header>
 
-  <div class="panel panel-default items">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th colspan="2">Product</th>
-          <th>Unit Price</th>
-          <th>Quantity</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% enhanced_cart.each do |item| %>
-          <%= render 'item', product: item[:product], quantity: item[:quantity].to_i %>
-        <% end %>
-      </tbody>
+  <% if enhanced_cart.empty? %>
+    <h3> Sorry, but it looks like your cart is empty :( </h3>  
+    <% else %>
+    <div class="panel panel-default items">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th colspan="2">Product</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% enhanced_cart.each do |item| %>
+            <%= render 'item', product: item[:product], quantity: item[:quantity].to_i %>
+          <% end %>
+        </tbody>
       <tfoot>
         <tr>
           <th colspan="4">
             TOTAL:
           </th>
           <th>
-            <%= cart_subtotal_cents / 100.0 %>
+            <%= humanized_money_with_symbol cart_subtotal_cents / 100.0 %>
           </th>
         </tr>
       </tfoot>
@@ -46,7 +49,7 @@
           data-currency="cad">
         </script>
       <% end %>
+      </div>
     </div>
-  </div>
-
+    <% end %>
 </section>
